@@ -3,10 +3,10 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const pg = require("pg")
 const path = require('path');
-
+const pg = require("pg");
 const { DATABASE_URL } = process.env;
 
-const sequelize = new Sequelize(DATABASE_URL, {
+const sequelize = new Sequelize( DATABASE_URL, {
     logging: false,
     native: false,
     dialectModule: pg,

@@ -21,7 +21,22 @@ const findUser = async (email) => {
     return userFound
 }
 
+const loginUser = async (email , password) => {
+    const user = await findUser(email);
+    if(!user){
+        throw new Error('Usuario no registrado')
+    }
+    if(password !== user.password){
+        return { success: false, message: "Correo electrónico o contraseña incorrecta." };
+    }
+    const { id, name} = user;
+    return {success: true, email, id, name }
+
+}
+
+
 module.exports = {
     createUser,
-    findUser
+    findUser,
+    loginUser
 }

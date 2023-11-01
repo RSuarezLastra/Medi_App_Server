@@ -1,4 +1,4 @@
-const {createUser, findUser} = require('../controllers/userControllers')
+const {createUser, findUser, loginUser} = require('../controllers/userControllers')
 
 const handleSignUp = async (req, res) => {
     const {name , email , password, phone , birthday} = req.body;
@@ -26,6 +26,20 @@ const handleSignUp = async (req, res) => {
     }
 }
 
+const handleLogin = async (req, res) => {
+    const {email, password} = req.body;
+    try {
+        const login = await loginUser(email, password);
+        if(login.success){
+            return res.status(200).json(login)
+        }
+        return res.status(401).json(login.message);
+    } catch (error) {
+        return res.status(500).json({ error: error.message })
+    }
+}
+
 module.exports = {
-    handleSignUp
+    handleSignUp,
+    handleLogin
 }

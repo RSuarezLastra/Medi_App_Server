@@ -3,7 +3,6 @@ const { Sequelize } = require('sequelize');
 const fs = require('fs');
 const pg = require("pg")
 const path = require('path');
-const pg = require("pg");
 const { DATABASE_URL } = process.env;
 
 const sequelize = new Sequelize( DATABASE_URL, {
@@ -28,7 +27,7 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User } = sequelize.models;
+const { User, Doctor } = sequelize.models;
 
 module.exports = {
     ...sequelize.models, 

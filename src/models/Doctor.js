@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
     sequelize.define(
-        'User',
+        'Doctor',
         {
             id: {
                 type: DataTypes.UUID,
@@ -18,6 +18,14 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 unique: true,
             },
+            specialty: {
+                type: DataTypes.ARRAY(DataTypes.JSON),
+                allowNull: false,
+            },
+            education: {
+                type: DataTypes.ARRAY(DataTypes.JSON),
+                allowNull:true,
+            },
             birthday: {
                 type: DataTypes.DATE,
                 allowNull: false,
@@ -32,7 +40,7 @@ module.exports = (sequelize) => {
             },
             userType: {
                 type: DataTypes.STRING,
-                defaultValue: 'user'
+                defaultValue: 'doctor'
             }
         },{timestamps: false}
     )

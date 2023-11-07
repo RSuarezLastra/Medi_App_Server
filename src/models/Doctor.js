@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
                 allowNull: false,
             },
             education: {
-                type: DataTypes.ARRAY(DataTypes.JSON),
+                type: DataTypes.STRING,
                 allowNull:true,
             },
             birthday: {

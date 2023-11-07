@@ -18,10 +18,6 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 unique: true,
             },
-            specialty: {
-                type: DataTypes.ARRAY(DataTypes.JSON),
-                allowNull: false,
-            },
             education: {
                 type: DataTypes.STRING,
                 allowNull:true,

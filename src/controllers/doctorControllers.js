@@ -1,12 +1,11 @@
 const { Doctor } = require('../db.js')
 
-const createDoctor = async ({ name , email , specialty, education, password, phone, birthday, userType }) => {
+const createDoctor = async ({ name , email , education, password, phone, birthday, userType }) => {
 
     const postDoctor = await Doctor.create({
         birthday,
         name,
         email,
-        specialty,
         education,
         phone,
         password,

@@ -5,7 +5,7 @@ const pg = require("pg")
 const path = require('path');
 const { DATABASE_URL } = process.env;
 
-const sequelize = new Sequelize( DATABASE_URL, {
+const sequelize = new Sequelize(DATABASE_URL, {
     logging: false,
     native: false,
     dialectModule: pg,
@@ -27,9 +27,19 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User, Doctor } = sequelize.models;
+const { User, Doctor, Specialty } = sequelize.models;
+
+Doctor.belongsToMany(Specialty, {
+    through: 'doctor_specialty',
+    timestamps: false
+});
+Specialty.belongsToMany(Doctor, {
+    through: 'doctor_specialty',
+    timestamps: false
+});
+
 
 module.exports = {
-    ...sequelize.models, 
-    conn: sequelize, 
+    ...sequelize.models,
+    conn: sequelize,
 };

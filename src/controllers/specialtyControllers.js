@@ -6,4 +6,14 @@ const createSpecialty = async ( name) => {
     return created
 }
 
-module.exports = createSpecialty
+const getAllSpecialties = async () => {
+ 
+    const specialties = await Specialty.findAll();
+
+    return specialties;
+}
+
+module.exports = {
+    createSpecialty,
+    getAllSpecialties,
+}

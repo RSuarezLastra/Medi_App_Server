@@ -1,6 +1,8 @@
-const { Doctor } = require('../db.js')
+const { Doctor, Specialty } = require('../db.js')
+const { Op } = require('sequelize');
 
-const createDoctor = async ({ name , email , education, password, phone, birthday, userType }) => {
+
+const createDoctor = async ({ name, email, education, password, phone, birthday, userType, specialty }) => {
 
     const postDoctor = await Doctor.create({
         birthday,
@@ -12,18 +14,45 @@ const createDoctor = async ({ name , email , education, password, phone, birthda
         userType,
     });
 
-    return postDoctor
+    const specialties = await Specialty.findAll({
+        where: {
+            specialty_name: specialty,
+        }
+    });
+
+    await postDoctor.addSpecialties(specialties);
+
+    const doctorWithSpecialties = await Doctor.findOne({
+        include: [{ model: Specialty, attributes: ["specialty_name", "id"], through: { attributes: [] } }],
+        where: { id: postDoctor.id },
+    });
+
+    return doctorWithSpecialties;
 }
 
-const findDoctor = async (email) => {
+const getAllDoctors = async () => {
+
+        const doctors = await Doctor.findAll();
+
+        return doctors;
+};
+
+const findDoctor = async (email, name) => {
     const doctorFound = await Doctor.findOne({
-        where: {email}
-    })
+        where: {
+            [Op.or]: [
+                { email },
+                { name },
+            ],
+        },
+    });
 
-    return doctorFound
-}
+    return doctorFound;
+};
+
 
 module.exports = {
     createDoctor,
     findDoctor,
+    getAllDoctors,
 }

@@ -5,9 +5,9 @@ module.exports = (sequelize) => {
         'Specialty',
         {
             id: {
-                type: DataTypes.UUID,
+                type: DataTypes.INTEGER,
                 primaryKey: true,
-                defaultValue: DataTypes.UUIDV4
+                autoIncrement: true
                 
             },
             specialty_name: {

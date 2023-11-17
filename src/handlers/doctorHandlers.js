@@ -2,6 +2,7 @@ const { findDoctor, createDoctor, getAllDoctors } = require('../controllers/doct
 
 const handleCreateDoctor = async (req, res) => {
     const { name, email, education, password, phone, birthday, userType, specialty } = req.body;
+    console.log(req.body);
     try {
         if (!name || !email || !password || !phone || !birthday || !specialty) {
             return res.status(401).send('Debe ingresar todos los datos para completar el registro')
@@ -25,6 +26,7 @@ const handleCreateDoctor = async (req, res) => {
         return res.status(200).json(postDoctor);
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: error.message });
     }
 }

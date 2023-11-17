@@ -19,7 +19,7 @@ const createDoctor = async ({ name, email, education, password, phone, birthday,
             specialty_name: specialty,
         }
     });
-
+   
     await postDoctor.addSpecialties(specialties);
 
     const doctorWithSpecialties = await Doctor.findOne({
@@ -42,7 +42,7 @@ const findDoctor = async (email, name) => {
         where: {
             [Op.or]: [
                 { email },
-                { name },
+                // { name },  esta madre hace problema al crear doctor 
             ],
         },
     });

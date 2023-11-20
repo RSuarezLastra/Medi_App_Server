@@ -32,8 +32,10 @@ const createDoctor = async ({ name, email, education, password, phone, birthday,
 
 const getAllDoctors = async () => {
 
-        const doctors = await Doctor.findAll();
-
+        const doctors = await Doctor.findAll({
+            include: [{ model: Specialty, attributes: ["specialty_name", "id"], through: { attributes: [] } }]
+        });
+        
         return doctors;
 };
 

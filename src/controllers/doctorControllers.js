@@ -19,7 +19,7 @@ const createDoctor = async ({ name, email, education, password, phone, birthday,
             specialty_name: specialty,
         }
     });
-   
+
     await postDoctor.addSpecialties(specialties);
 
     const doctorWithSpecialties = await Doctor.findOne({
@@ -32,11 +32,21 @@ const createDoctor = async ({ name, email, education, password, phone, birthday,
 
 const getAllDoctors = async () => {
 
-        const doctors = await Doctor.findAll({
-            include: [{ model: Specialty, attributes: ["specialty_name", "id"], through: { attributes: [] } }]
-        });
-        
-        return doctors;
+    const doctors = await Doctor.findAll({
+        include: [{ model: Specialty, attributes: ["specialty_name", "id"], through: { attributes: [] } }]
+    });
+
+    return doctors;
+};
+
+const getDoctorById = async (id) => {
+
+    const doctor = await Doctor.findOne({
+        where: { id },
+        include: [{ model: Specialty, attributes: ["specialty_name", "id"], through: { attributes: [] } }]
+    });
+
+    return doctor;
 };
 
 const findDoctor = async (email, name) => {
@@ -44,7 +54,6 @@ const findDoctor = async (email, name) => {
         where: {
             [Op.or]: [
                 { email },
-                // { name },  esta madre hace problema al crear doctor 
             ],
         },
     });
@@ -57,4 +66,5 @@ module.exports = {
     createDoctor,
     findDoctor,
     getAllDoctors,
+    getDoctorById
 }

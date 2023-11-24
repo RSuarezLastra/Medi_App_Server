@@ -1,4 +1,4 @@
-const { findDoctor, createDoctor, getAllDoctors } = require('../controllers/doctorControllers')
+const { findDoctor, createDoctor, getAllDoctors, getDoctorById } = require('../controllers/doctorControllers')
 
 const handleCreateDoctor = async (req, res) => {
     const { name, email, education, password, phone, birthday, userType, specialty } = req.body;
@@ -40,7 +40,7 @@ const handleGetDoctors = async (req, res) => {
         if (name) {
             const doctorFound = await findDoctor(name);
             if (doctorFound.length === 0) {
-                return res.status(404).json({ message: `No se encontro el doctor ${name}`})
+                return res.status(404).json({ message: `No se encontro el doctor ${name}` })
             } else {
                 return res.status(200).json(doctorFound);
             }
@@ -54,7 +54,27 @@ const handleGetDoctors = async (req, res) => {
 
 }
 
+const handleGetDoctorById = async (req, res) => {
+
+    const { id } = req.params;
+    try {
+        if (!id) {
+            throw new Error('No se ha encontrado el doctor')
+        } else {
+            const doctor = await getDoctorById(id);
+            if (doctor) {
+                return res.status(200).json(doctor)
+            } else {
+                return res.status(404).send({ message: 'No se encontro el doctor en la base de datos' })
+            }
+        }
+    } catch (error) {
+        return res.status(500).json({ error: error.message });
+    }
+}
+
 module.exports = {
     handleCreateDoctor,
-    handleGetDoctors
+    handleGetDoctors,
+    handleGetDoctorById
 }

@@ -2,7 +2,7 @@ const { DataTypes } = require("sequelize");
 
 module.exports = (sequelize) => {
     sequelize.define(
-        'User',
+        'Doctor',
         {
             id: {
                 type: DataTypes.INTEGER,
@@ -18,6 +18,10 @@ module.exports = (sequelize) => {
                 allowNull: false,
                 unique: true,
             },
+            education: {
+                type: DataTypes.STRING,
+                allowNull:true,
+            },
             birthday: {
                 type: DataTypes.DATE,
                 allowNull: false,
@@ -32,7 +36,7 @@ module.exports = (sequelize) => {
             },
             userType: {
                 type: DataTypes.STRING,
-                defaultValue: 'user'
+                defaultValue: 'doctor'
             }
         },{timestamps: false}
     )

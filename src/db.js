@@ -1,14 +1,14 @@
 require('dotenv').config();
 const { Sequelize } = require('sequelize');
 const fs = require('fs');
+const pg = require("pg")
 const path = require('path');
-const {
-    DB_USER, DB_PASSWORD, DB_HOST,
-} = process.env;
+const { DATABASE_URL } = process.env;
 
-const sequelize = new Sequelize(`postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/mediapp`, {
+const sequelize = new Sequelize(DATABASE_URL, {
     logging: false,
     native: false,
+    dialectModule: pg,
 });
 
 const basename = path.basename(__filename);
@@ -27,9 +27,19 @@ let entries = Object.entries(sequelize.models);
 let capsEntries = entries.map((entry) => [entry[0][0].toUpperCase() + entry[0].slice(1), entry[1]]);
 sequelize.models = Object.fromEntries(capsEntries);
 
-const { User } = sequelize.models;
+const { User, Doctor, Specialty } = sequelize.models;
+
+Doctor.belongsToMany(Specialty, {
+    through: 'doctor_specialty',
+    timestamps: false
+});
+Specialty.belongsToMany(Doctor, {
+    through: 'doctor_specialty',
+    timestamps: false
+});
+
 
 module.exports = {
-    ...sequelize.models, 
-    conn: sequelize, 
+    ...sequelize.models,
+    conn: sequelize,
 };

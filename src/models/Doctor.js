@@ -23,7 +23,7 @@ module.exports = (sequelize) => {
                 allowNull:true,
             },
             birthday: {
-                type: DataTypes.DATE,
+                type: DataTypes.DATEONLY,
                 allowNull: false,
             },
             phone: {

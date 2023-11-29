@@ -19,7 +19,7 @@ module.exports = (sequelize) => {
                 unique: true,
             },
             birthday: {
-                type: DataTypes.DATE,
+                type: DataTypes.DATEONLY,
                 allowNull: false,
             },
             phone: {
